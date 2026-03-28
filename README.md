@@ -8,6 +8,7 @@ Permite mostrar todas las citas generadas y sus detalles
 
 http://localhost:8080/citas/1 <- (1 es una variable)
 Permite mostrar una cita y sus detalles
+
 http://localhost:8080/citas/horarios_disponibles
 Permite mostrar las horas disponibles, usando como variable el día de hoy 
 “LocalDate.now()”
