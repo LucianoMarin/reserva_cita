@@ -1,5 +1,5 @@
-Microservico creado en JAVA SPRINGBOOT usando endpoints del tipo GET.
-El cual nos permitirá ver los detalles de citas médicas y la disponibilidad de horario.
+Microservico creado en JAVA SPRINGBOOT utilizando CRUD completo
+Este microservicio nos permitira crear citas medicas.
 
 para usarlo, usar las siguientes url:
 
