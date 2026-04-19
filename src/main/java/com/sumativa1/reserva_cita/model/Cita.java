@@ -3,60 +3,97 @@ package com.sumativa1.reserva_cita.model;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+
+@Entity
+@Table(name = "cita")
 public class Cita {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private int id;
-    private String rutPaciente;
+    @NotNull(message = "Los campos de paciente_id no pueden estar vacios")
+    @ManyToOne
+    @JoinColumn(name = "paciente_id")
+    private Paciente paciente;
+
+    @Pattern(regexp = "(CONFIRMADO|SIN CONFIRMAR|CANCELADO|PORFAVOR VALIDAR EN ADMISION)", message = "Solo se aceptan estados: CONFIRMADO, SIN CONFIRMAR, CANCELADO")
+    @NotBlank(message = "Los campos de estado no pueden estar vacios")
+    @Column(name = "estado")
     private String estado;
-    private String codigoMedico;
+
+    @NotNull(message = "Los campos de paciente_id no pueden estar vacios")
+    @ManyToOne
+    @JoinColumn(name = "medico_id")
+    private Medico medico;
+
+    @NotNull(message = "Los campos de paciente_id no pueden estar vacios")
+    @Column(name = "hora_citacion")
     private LocalTime horaCitacion;
+
+    @NotNull(message = "Los campos de paciente_id no pueden estar vacios")
+    @Column(name = "fecha_citacion")
     private LocalDate fechaCitacion;
+
+    @Column(name = "fecha_confirmacion")
     private LocalDate fechaConfirmacion;
 
-
-
-    public Cita(int id, String rutPaciente, String estado, String codigoMedico,LocalTime horaCitacion, LocalDate fechaCitacion, LocalDate fechaConfirmacion) {
-        this.id = id;
-        this.rutPaciente=rutPaciente;
-        this.estado = estado;
-        this.codigoMedico = codigoMedico;
-        this.horaCitacion=horaCitacion;
-        this.fechaCitacion = fechaCitacion;
-        this.fechaConfirmacion=fechaConfirmacion;
+    public Cita() {
     }
 
+    public Cita(Long id, Paciente paciente, String estado, Medico medico, LocalTime horaCitacion,
+            LocalDate fechaCitacion, LocalDate fechaConfirmacion) {
+        this.id = id;
+        this.paciente = paciente;
+        this.estado = estado;
+        this.medico = medico;
+        this.horaCitacion = horaCitacion;
+        this.fechaCitacion = fechaCitacion;
+        this.fechaConfirmacion = fechaConfirmacion;
+    }
 
-    public int getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getRutPaciente() {
-        return this.rutPaciente;
+    public Paciente getPaciente() {
+        return this.paciente;
     }
 
-    public void setRutPaciente(String rutPaciente) {
-        this.rutPaciente = rutPaciente;
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
     }
 
     public String getEstado() {
-        return this.estado;
+        return this.estado != null ? this.estado.toUpperCase() : null;
+
     }
 
     public void setEstado(String estado) {
         this.estado = estado;
     }
 
-    public String getCodigoMedico() {
-        return this.codigoMedico;
+    public Medico getMedico() {
+        return this.medico;
     }
 
-    public void setCodigoMedico(String codigoMedico) {
-        this.codigoMedico = codigoMedico;
+    public void setMedico(Medico medico) {
+        this.medico = medico;
     }
 
     public LocalTime getHoraCitacion() {
@@ -82,8 +119,5 @@ public class Cita {
     public void setFechaConfirmacion(LocalDate fechaConfirmacion) {
         this.fechaConfirmacion = fechaConfirmacion;
     }
-
-
-
 
 }

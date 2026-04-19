@@ -1,17 +1,70 @@
 package com.sumativa1.reserva_cita.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+
+@Entity
+@Table(name = "medico")
 public class Medico {
 
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    private Long id;
+
+    @Column(unique = true, name = "codigo_medico")
     private String codigoMedico;
+
+    @Column(unique = true, name = "rut")
+    @Pattern(regexp = "^[0-9]{7,8}-[0-9kK]$", message = "Rut no valido, recuerde colocar el - y codigo verificador")
+    @NotBlank(message = "El campo rut no puede estar vacio en medico")
     private String rut;
+
+    @Column(name = "nombre")
+    @Pattern(regexp = "^[a-zA-Z].+$", message = "Solo se acepta en nombre: Letras")
+    @NotBlank(message = "Los campos de nombre no pueden estar vacios")
     private String nombre;
+
+    @Column(name = "apellido_paterno")
+    @Pattern(regexp = "^[a-zA-Z].+$", message = "Solo se acepta en apellido_paterno: Letras")
+    @NotBlank(message = "Los campos de apellido_paterno no pueden estar vacios")
     private String apellido_paterno;
+
+    @Column(name = "apellido_materno")
+    @Pattern(regexp = "^[a-zA-Z].+$", message = "Solo se acepta en apellido_materno: Letras")
     private String apellido_materno;
+
+    @JoinColumn(name = "especialidad_id")
+    @ManyToOne
+    @NotNull(message = "el campo de especialidad_id no pueden estar vacios")
+
     private Especialidad especialidad;
 
+    public Medico() {
+    }
 
-    public Medico(int id, String codigoMedico, String rut, String nombre, String apellido_paterno, String apellido_materno, Especialidad especialidad) {
+    public Medico(String codigoMedico, String rut, String nombre, String apellido_paterno,
+            String apellido_materno, Especialidad especialidad) {
+
+        this.codigoMedico = codigoMedico;
+        this.rut = rut;
+        this.nombre = nombre;
+        this.apellido_paterno = apellido_paterno;
+        this.apellido_materno = apellido_materno;
+        this.especialidad = especialidad;
+    }
+
+    public Medico(Long id, String codigoMedico, String rut, String nombre, String apellido_paterno,
+            String apellido_materno, Especialidad especialidad) {
         this.id = id;
         this.codigoMedico = codigoMedico;
         this.rut = rut;
@@ -21,15 +74,11 @@ public class Medico {
         this.especialidad = especialidad;
     }
 
-
-
-
-
-    public int getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -80,6 +129,5 @@ public class Medico {
     public void setEspeciadad(Especialidad especialidad) {
         this.especialidad = especialidad;
     }
-
 
 }
