@@ -16,7 +16,7 @@ public class CitaTest {
 
 @Test
 
-void TestConstructor(){
+void testConstructorCita(){
 
 //TESTEAMOS EL CONSTRUCTOR PARAMETRIZADO.
    
@@ -38,8 +38,31 @@ void TestConstructor(){
 }
 
 
+@Test
+void testCitaGetterAndSetter(){
+    Paciente paciente=new Paciente();
+    Medico medico=new Medico();
 
-void TestGetterAndSetter(){
+
+    Cita cita=new Cita();
+
+    cita.setId(1L);
+    cita.setPaciente(paciente);
+    cita.setEstado("CONFIRMADO");
+    cita.setMedico(medico);
+    cita.setHoraCitacion(LocalTime.of(10,00));
+    cita.setFechaCitacion(LocalDate.now());
+    cita.setFechaConfirmacion(LocalDate.now());
+
+
+    
+    assertEquals(1L, cita.getId());
+    assertEquals(paciente, cita.getPaciente());
+    assertEquals("CONFIRMADO", cita.getEstado());
+    assertEquals(medico, cita.getMedico());
+    assertEquals(LocalTime.of(10,00), cita.getHoraCitacion());
+    assertEquals(LocalDate.now(), cita.getFechaCitacion());
+    assertEquals(LocalDate.now(), cita.getFechaConfirmacion());
 
 }
 
