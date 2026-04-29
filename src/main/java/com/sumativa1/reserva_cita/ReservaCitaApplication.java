@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 
 import com.sumativa1.reserva_cita.model.Especialidad;
 import com.sumativa1.reserva_cita.model.Medico;
@@ -24,56 +25,59 @@ public class ReservaCitaApplication {
 	}
 
 	@Bean
-	CommandLineRunner initData(EspecialidadRepository espRepo, MedicoRepository medRepo, PacienteRepository pacRepo) {
-		return args -> {
+@Profile("dev")
+CommandLineRunner initData(
+        EspecialidadRepository espRepo,
+        MedicoRepository medRepo,
+        PacienteRepository pacRepo) {
 
-			if (espRepo.count() == 0) {
+    return args -> {
 
-				List<Especialidad> especialidades = List.of(
-						new Especialidad("Cardiologo"),
-						new Especialidad("Diabetologo"),
-						new Especialidad("Cirujano"),
-						new Especialidad("Medico General"),
-						new Especialidad("Enfermero"));
+        if (espRepo.count() == 0) {
 
-				espRepo.saveAll(especialidades);
-			}
+            List<Especialidad> especialidades = List.of(
+                    new Especialidad("Cardiologo"),
+                    new Especialidad("Diabetologo"),
+                    new Especialidad("Cirujano"),
+                    new Especialidad("Medico General"),
+                    new Especialidad("Enfermero"));
 
-			if (medRepo.count() == 0) {
+            espRepo.saveAll(especialidades);
+        }
 
-				Especialidad cardiologo = espRepo
-						.findBynombreEspecialidad("Cardiologo")
-						.orElseThrow();
+        if (medRepo.count() == 0) {
 
-				Especialidad medicoGeneral = espRepo
-						.findBynombreEspecialidad("Medico General")
-						.orElseThrow();
+            Especialidad cardiologo = espRepo
+                    .findBynombreEspecialidad("Cardiologo")
+                    .orElseThrow();
 
-				List<Medico> medicos = List.of(
-						new Medico("MED000001", "19332143-2", "Alberto", "Cortez", "Cortez", cardiologo),
-						new Medico("MED000002", "13848223-1", "Camilo", "Villanueva", "Perez", cardiologo),
-						new Medico("MED000003", "15552233-2", "Daniel", "Frez", "Frez", medicoGeneral),
-						new Medico("MED000004", "18586023-2", "Carlos", "Ruiz", "Tagle", medicoGeneral),
-						new Medico("MED000005", "8856823-7", "Javiera", "Cid", "Cid", medicoGeneral),
-						new Medico("MED000006", "9332143-4", "Camila", "Aguero", "Jara", medicoGeneral));
+            Especialidad medicoGeneral = espRepo
+                    .findBynombreEspecialidad("Medico General")
+                    .orElseThrow();
 
-				medRepo.saveAll(medicos);
-			}
+            List<Medico> medicos = List.of(
+                    new Medico("MED000001", "19332143-2", "Alberto", "Cortez", "Cortez", cardiologo),
+                    new Medico("MED000002", "13848223-1", "Camilo", "Villanueva", "Perez", cardiologo),
+                    new Medico("MED000003", "15552233-2", "Daniel", "Frez", "Frez", medicoGeneral),
+                    new Medico("MED000004", "18586023-2", "Carlos", "Ruiz", "Tagle", medicoGeneral),
+                    new Medico("MED000005", "8856823-7", "Javiera", "Cid", "Cid", medicoGeneral),
+                    new Medico("MED000006", "9332143-4", "Camila", "Aguero", "Jara", medicoGeneral));
 
-			if (pacRepo.count() == 0) {
-				List<Paciente> pacientes = List.of(
-						new Paciente("18775116-0","Luciano","Marin"),
-						new Paciente("9415449-9","Lujana","Eunice"),
-						new Paciente("9862879-7","Mario","Marin"),
-						new Paciente("19029771-3","Carolina","Perez"),
-						new Paciente("11111111-1","Pedro","Pascal")
+            medRepo.saveAll(medicos);
+        }
 
-				);
+        if (pacRepo.count() == 0) {
+            List<Paciente> pacientes = List.of(
+                    new Paciente("18775116-0","Luciano","Marin"),
+                    new Paciente("9415449-9","Lujana","Eunice"),
+                    new Paciente("9862879-7","Mario","Marin"),
+                    new Paciente("19029771-3","Carolina","Perez"),
+                    new Paciente("11111111-1","Pedro","Pascal")
+            );
 
-				pacRepo.saveAll(pacientes);
-			}
-
-		};
-	}
+            pacRepo.saveAll(pacientes);
+        }
+    };
+}
 
 }
