@@ -22,6 +22,6 @@ COPY --from=buildstage /app/target/reserva_cita-0.0.1-SNAPSHOT.jar /app/reserva_
 
 COPY Wallet_FULLSTACK /app/wallet
 
-EXPOSE 8080
+EXPOSE 8081
 
 ENTRYPOINT [ "java","-jar","app/reserva_cita.jar" ]
